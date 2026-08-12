@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { MessageCircle, Feather, Music, BookOpen, Smile, Mic, Home, Settings, LogIn, Crown, Image as ImageIcon, Send, Paperclip } from 'lucide-react';
+import { MessageCircle, Feather, Music, BookOpen, Smile, Mic, Home, Settings, LogIn, Crown, Send } from 'lucide-react';
 
 export default function HomePage() {
   const [activeTab, setActiveTab] = useState('AI Chat');
@@ -34,10 +34,14 @@ export default function HomePage() {
     setLoading(false);
   }
 
+  const handleKeyPress = (e: any) => {
+    if(e.key === 'Enter') handleSend();
+  }
+
   return (
     <div className="flex h-screen bg-gray-100 dark:bg-[#0a0a1a] text-gray-900 dark:text-white">
       {/* Sidebar */}
-      <div className="w-64 bg-gradient-to-b from-blue-900 to-blue-700 p-4 flex flex-col">
+      <div className="w-64 bg-gradient-to-b from-blue-900 to-blue-700 p-4 flex-col">
         <div className="text-center mb-6">
           <img src="https://i.imgur.com/8KmCSTT.png" className="w-20 h-20 rounded-full mx-auto border-4 border-yellow-400"/>
           <p className="mt-2 font-bold">🙏 Radhe Radhe 🙏</p>
@@ -59,36 +63,15 @@ export default function HomePage() {
       </div>
 
       {/* Main */}
-      <div className="flex-1 flex-col p-4">
+      <div className="flex-1 flex flex-col p-4">
         <header className="flex justify-between items-center mb-4">
           <h1 className="text-2xl font-bold flex items-center gap-2">👑 PriyaVRana-Ai <span className="text-sm font-normal">All in One AI Assistant</span></h1>
         </header>
 
         <div className="flex-1 overflow-y-auto bg-white dark:bg-[#111122] rounded-xl p-4 mb-4">
           {messages.map((m,i) => (
-            <div key={i} className={`p-3 my-2 rounded-lg ${m.role==='ai'? 'bg-blue-100 dark:bg-blue-900' : 'bg-gray-200 dark:bg-gray-800 text-right'}`}>
+            <div key={i} className={`p-3 my-2 rounded-lg whitespace-pre-line ${m.role==='ai'? 'bg-blue-100 dark:bg-blue-900' : 'bg-gray-200 dark:bg-gray-800 text-right'}`}>
               {m.text}
             </div>
           ))}
-          {loading && <p>Socha raha hu...</p>}
-        </div>
-
-        <div className="flex gap-2">
-          <input value={prompt} onChange={e=>setPrompt(e.target.value)}
-            placeholder="अपना prompt यहाँ लिखें..."
-            className="flex-1 p-3 rounded-lg bg-gray-200 dark:bg-gray-800 outline-none"/>
-          <button onClick={handleSend} className="p-3 bg-blue-600 rounded-lg"><Send/></button>
-        </div>
-
-        <div className="flex gap-2 mt-3 overflow-x-auto">
-          {tabs.map(tab => (
-            <button key={tab.name} onClick={() => setActiveTab(tab.name)}
-              className={`flex flex-col items-center p-2 rounded-lg min-w-[80px] ${activeTab===tab.name? 'bg-blue-600' : 'bg-gray-200 dark:bg-gray-800'}`}>
-              {tab.icon} <span className="text-xs mt-1">{tab.name}</span>
-            </button>
-          ))}
-        </div>
-      </div>
-    </div>
-  )
-}
+          {loading && 
