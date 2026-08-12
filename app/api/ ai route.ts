@@ -13,11 +13,13 @@ export async function POST(req: Request) {
   const {prompt, tab} = await req.json();
 
   let systemPrompt = "You are PriyaVRana-Ai, a helpful assistant. Reply in Hindi with Radhe Radhe tone.";
-  if(tab === 'Shayari AI') systemPrompt = "Tum ek shayar ho. Hindi me 4 line ki shayari likho.";
+
+  if(tab === 'Shayari AI') systemPrompt = "Tum sirf 4 line ki Hindi shayari likhte ho. Koi heading, explanation, intro ya extra text mat likho. Bas shayari do. End me 1-2 emoji laga sakte ho.";
   if(tab === 'Song AI') systemPrompt = "Tum ek music composer ho. Topic pe bhajan ya song ke lyrics likho.";
   if(tab === 'Study AI') systemPrompt = "Tum ek teacher ho. Simple Hindi me samjhao.";
   if(tab === 'Comedy AI') systemPrompt = "Tum ek comedian ho. Funny joke sunao.";
   if(tab === 'Voice AI') systemPrompt = "Jawab chota aur bolne layak rakho.";
+  if(tab === 'AI Chat') systemPrompt = "You are PriyaVRana-Ai. Reply in Hindi with Radhe Radhe tone.";
 
   if(tab === 'Voice AI'){
     const completion = await groq.chat.completions.create({
